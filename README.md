@@ -1,7 +1,7 @@
 # CACTI/LASSO WRF Cloud-Resolving Model Analysis
 ## Code for Microphysical Property Evaluation and Comparison with Observations
 
-This repository contains analysis code for a journal paper (in revision) comparing WRF-simulated cloud microphysical properties with observations from the CACTI campaign and DOE/ARM LASSO facility. The code processes cloud-resolving WRF simulations and observational data from radar (CSAPR/Taranis), cell tracking, and in-situ probes.
+This repository contains analysis code for comparing WRF-simulated cloud microphysical properties with observations from the CACTI campaign. The code processes cloud-resolving WRF simulations and observational data from radar (CSAPR/Taranis), cell tracking for both observations and simulations, aircraft probes, satellite retrievals, and surface measurements at the ARM AMF site. Simulations include a 3-km seasonal simulation and case studies from the ARM Large Eddy Simulation ARM Symbiotic Simulation and Observation (LASSO) CACTI project. 
 
 ---
 
@@ -13,15 +13,17 @@ This repository contains analysis code for a journal paper (in revision) compari
 - [Setup & Installation](#setup--installation)
 - [Running the Analysis](#running-the-analysis)
 - [Generated Data Files](#generated-data-files)
+- [Open Research Statement](#open-research-statement)
+- [Citation](#citation)
 - [Contact](#contact)
 
 ---
 
 ## Project Overview
 
-This project evaluates WRF-simulated cloud microphysical properties by comparing them against observations collected during:
-- **CACTI** (Clouds, Aerosol and Complex Terrain Interactions, Oct 2018 - Mar 2019)
-- **DOE/ARM LASSO** (Large Eddy Simulation ARM Symbiotic Simulation and Observation) facility
+This project evaluates WRF-simulated cloud microphysical properties by comparing them against observations collected during the CACTI (Clouds, Aerosol and Complex Terrain Interactions, Oct 2018 - Mar 2019) field campaign (doi: 0.1175/BAMS-D-20-0030.1). WRF simulations include:
+- **3-km Seasonal Simulation**: doi: 10.5281/zenodo.10655168
+- **LASSO Case Studies (2.5-km, 500-m, & 100-m)** (Large Eddy Simulation ARM Symbiotic Simulation and Observation) project: doi: 10.5439/1905789
 
 The analysis focuses on:
 - Cloud top temperature and reflectivity properties
@@ -66,15 +68,15 @@ Scripts that prepare raw input data and generate intermediate data products. The
 Scripts that read processed data and generate publication-quality figures. These scripts assume intermediate data products from processing scripts are available.
 
 **Figure Mapping:**
-- `plot_fig_1_3_4_5_S5_S6_S7_cell_stats.ipynb` - Figures 1, 3, 4, 5, S5, S6, S7: Cell statistics
+- `plot_fig_1_3_4_5_S5_S6_cell_stats.ipynb` - Figures 1, 3, 4, 5, S5, S6: Cell statistics
 - `plot_fig_2_S3_S4_wrf_vs_obs_CTT_col_max_ref.ipynb` - Figures 2, S3, S4: CTT/reflectivity comparison
 - `plot_fig_6_7_8_S7_wrf_vs_obs_dsd_properties.ipynb` - Figures 6, 7, 8, S7: DSD properties
-- `plot_fig_9_10_11_S9_S10_wrf_obs_disdrometer.ipynb` - Figures 9, 10, 11, S9, S10: Disdrometer comparison
+- `plot_fig_9_10_11_S8_S9_wrf_obs_disdrometer.ipynb` - Figures 9, 10, 11, S8, S9: Disdrometer comparison
 - `plot_fig_12_wrf_vs_obs_CTT_col_max_ref_LASSO.ipynb` - Figure 12: LASSO CTT/reflectivity
 - `plot_fig_13_14_wrf_vs_obs_dsd_properties_LASSO.ipynb` - Figures 13, 14: LASSO DSD properties
 - `plot_fig_S1_mie_scattering.ipynb` - Figure S1: Mie scattering efficiencies (theory)
 - `plot_fig_S2_ctt_CDFs.ipynb` - Figure S2: CTT cumulative distributions
-- `plot_fig_S11_wrf_vs_obs_dsd_properties_LASSO_500m_native.ipynb` - Figure S11: LASSO 500m DSD
+- `plot_fig_S10_wrf_vs_obs_dsd_properties_LASSO_500m_native.ipynb` - Figure S10: LASSO 500m DSD
 - `plot_WRF_obs_aero_time_series.ipynb` - Time series analysis of aerosol effects
 
 **Input Data:** Requires intermediate `.p` (pickle) files and `.npz` arrays from `generated_data/` directory.
@@ -108,11 +110,16 @@ This analysis requires external data from the DOE Atmospheric Radiation Measurem
 ### External Data Sources (Download Required)
 
 #### 1. **WRF Model Output**
-- **Source:** Available upon request from authors
+- **Source:** Available upon request from authors (in-house simulations)
 - **Contact:** McKenna W. Stanford (mckenna.stanford@pnnl.gov)
-- **Description:** WRF simulations at 3 km grid spacing for CACTI/LASSO domain
+- **Description:** 
+  - **3-km Seasonal Simulation:** Full CACTI period (Oct 15, 2018 - Mar 3, 2019)
+  - **LASSO Case Studies:** Higher-resolution simulations (2.5-km, 500-m, 100-m) for select days
+- **DOIs:**
+  - 3-km Seasonal Simulation: https://doi.org/10.5281/zenodo.10655168
+  - LASSO-CACTI Case Studies: https://doi.org/10.5439/1905789
+- **LASSO Bundle Browser:** https://adc.arm.gov/lasso/#/cacti (downloadable case study bundles)
 - **Files:** WRF 2D and 3D output files in NetCDF format
-- **Dates:** Oct 15, 2018 - Mar 3, 2019
 - **Directory Structure:** Expected at `/pscratch/sd/m/mckenna/cacti/wrf/` (adjust paths in scripts as needed)
 
 #### 2. **CSAPR Radar - Cloud-Adaptive Scanning Radar (Taranis)**
@@ -122,7 +129,7 @@ This analysis requires external data from the DOE Atmospheric Radiation Measurem
 - **Product:** `taranis_corcsapr2cfrppiqcM1_gridded.c1`
 - **Description:** Attenuation-corrected reflectivity observations
 - **Spatial Resolution:** 500 m
-- **Temporal Resolution:** 30 seconds (aggregated)
+- **Temporal Resolution:** 15 minutes
 - **Domain:** CACTI experimental domain
 - **Expected Directory:** `/global/cfs/projectdirs/m1657/avarble/cacti/Taranis/taranis_corcsapr2cfrppiqcM1_gridded.c1/`
 
@@ -149,8 +156,27 @@ This analysis requires external data from the DOE Atmospheric Radiation Measurem
 - **Expected Directory:** `/global/homes/m/mckenna/cacti_data/cell_tracks/`
 - **Note:** Higher temporal resolution tracking available from authors (mckenna.stanford@pnnl.gov)
 
+#### 5. **Satellite Data - GOES-16**
+- **Source:** DOE ARM Data Discovery - [https://adc.arm.gov/](https://adc.arm.gov/)
+- **DOI:** https://doi.org/10.5439/2008448
+- **Product:** Parallax-corrected VISST-derived pixel level products from satellite GOES-16
+- **Description:** Cloud-top temperature and optical properties from satellite retrievals
+- **Temporal Resolution:** High-frequency satellite observations
+- **Domain:** CACTI experimental domain
+
+#### 6. **Aircraft In-Situ Data**
+- **Source:** DOE ARM Data Discovery - [https://adc.arm.gov/](https://adc.arm.gov/)
+- **Instruments:**
+  - **Fast Cloud Droplet Probe (AAFFCDP):** https://doi.org/10.5439/1417472
+    - Cloud droplet size distributions and concentrations
+  - **2 Dimensional Stereo Probe (AAF2DSH):** https://doi.org/10.5439/1419322
+    - Particle imaging and sizing
+  - **High Volume Precipitation Spectrometer (AAFHVPS):** https://doi.org/10.5439/1417471
+    - Precipitation particle size distributions
+- **Description:** Aircraft-based microphysical observations from the ARM Mobile Facility (AMF)
+- **Platform:** Gulfstream-1 research aircraft during CACTI field campaign
+
 ### Supplementary Data
-- **GOES-16 Cloud Top Temperature:** Standard ARM archive
 - **WRF Matched File Lists:** Generated for performance (see `processing/calc_wrf_properties.ipynb`)
 
 ---
@@ -211,15 +237,15 @@ EXTERNAL DATA
     ↓
 [2. ANALYSIS SCRIPTS]
     
-    ├─→ plot_fig_1,3,4,5_S5,S6,S7_cell_stats.ipynb
+    ├─→ plot_fig_1,3,4,5_S5,S6_cell_stats.ipynb
     ├─→ plot_fig_2_S3,S4_wrf_vs_obs_CTT_col_max_ref.ipynb
     ├─→ plot_fig_6,7,8_S7_wrf_vs_obs_dsd_properties.ipynb
-    ├─→ plot_fig_9,10,11_S9,S10_wrf_obs_disdrometer.ipynb
+    ├─→ plot_fig_9,10,11_S8,S9_wrf_obs_disdrometer.ipynb
     ├─→ plot_fig_12_wrf_vs_obs_CTT_col_max_ref_LASSO.ipynb
     ├─→ plot_fig_13,14_wrf_vs_obs_dsd_properties_LASSO.ipynb
     ├─→ plot_fig_S1_mie_scattering.ipynb
     ├─→ plot_fig_S2_ctt_CDFs.ipynb
-    ├─→ plot_fig_S11_wrf_vs_obs_dsd_properties_LASSO_500m_native.ipynb
+    ├─→ plot_fig_S10_wrf_vs_obs_dsd_properties_LASSO_500m_native.ipynb
     └─→ plot_WRF_obs_aero_time_series.ipynb
     
     ↓
@@ -408,12 +434,32 @@ Intermediate data products generated during processing phase:
 
 ---
 
+## Open Research Statement
+
+Code used to generate analyses and plots in this study are available on GitHub ([github.com/mckenna-stanford-pnnl/jgra_paper](https://github.com/mckenna-stanford-pnnl/jgra_paper); Zenodo DOI will be minted upon publication).
+
+All observational datasets are available for download via the ARM Data Discovery website ([https://adc.arm.gov/discovery/](https://adc.arm.gov/discovery/#/)), including:
+- C-SAPR2 Taranis Dataset (https://doi.org/10.5439/2440152)
+- Video Disdrometer Drop Size Distributions - VDIS (https://doi.org/10.5439/1992988)
+- Laser Disdrometer Drop Size Distributions - LD (https://doi.org/10.5439/1973058)
+- Video Disdrometer VAP - VDISQUANTS (https://doi.org/10.5439/1592683)
+- Laser Disdrometer VAP - LDQUANTS (https://doi.org/10.5439/1432694)
+- Parallax-corrected VISST-derived pixel level products from satellite GOES-16 (https://doi.org/10.5439/2008448)
+- Aircraft Fast Cloud Droplet Probe - AAFFCDP (https://doi.org/10.5439/1417472)
+- Aircraft 2 Dimensional Stereo Probe - AAF2DSH (https://doi.org/10.5439/1419322)
+- Aircraft High Volume Precipitation Spectrometer - AAFHVPS (https://doi.org/10.5439/1417471)
+
+ARM LASSO-CACTI simulations are available for download via the LASSO-CACTI Bundle Browser ([https://adc.arm.gov/lasso/#/cacti](https://adc.arm.gov/lasso/#/cacti); https://doi.org/10.5439/1905789), with details provided at [https://lasso-cacti-doc.arm.gov/latest/citing_LASSO.html](https://lasso-cacti-doc.arm.gov/latest/citing_LASSO.html).
+
+---
+
 ## Citation
 
 If you use this code, please cite:
-- The associated journal paper (in revision)
+- The associated journal paper (publication details will be added upon acceptance)
 - DOE ARM data products via provided DOIs
-- WRF and model documentation
+- WRF simulations via provided Zenodo DOI
+- LASSO-CACTI simulations via https://doi.org/10.5439/1905789
 
 ---
 
@@ -431,13 +477,15 @@ For issues with external data sources:
 
 ## License
 
-[Specify license here - e.g., MIT, Apache 2.0, etc.]
+This code repository is provided as-is for scientific research purposes. Please see the LICENSE file for specific terms.
 
 ---
 
 ## Changelog
 
-**Version 1.0** (July 2026) - Initial Zenodo release
-- Publication-ready code
-- Complete documentation
-- Workflow pipeline documented
+**Version 1.0** (July 2026)
+- Publication-ready code organization
+- Complete workflow documentation
+- Full data source citations with DOIs
+- Open Research section per JGRA requirements
+- Zenodo DOI pending upon publication
