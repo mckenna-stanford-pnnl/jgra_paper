@@ -139,14 +139,14 @@ This analysis requires external data from the DOE Atmospheric Radiation Measurem
 - **Description:** Drop size distribution measurements from in-situ probes
 - **Expected Directory:** `/global/homes/m/mckenna/cacti_data/disdrometer/` (adjust as needed)
 
-#### 4. **Cell Tracking Data (Observational)**
+#### 4. **Cell Tracking Data**
 - **Source:** Zenodo & DOE ARM Data Discovery
 - **DOIs:** 
   - WRF Simulation & Cell Tracks (15-min): https://doi.org/10.5281/zenodo.10655168
-  - PyFLEXTRKR Configuration: https://doi.org/10.5281/zenodo.13760823
+  - PyFLEXTRKR Configuration (15-min): https://doi.org/10.5281/zenodo.13760823
 - **Temporal Resolution:** 
-  - 15-minute intervals (main product for Figures 1, 3, 4, 5, S5, S6, S7)
-  - 3.75-minute intervals (higher temporal resolution available; configuration available upon request)
+  - 3.75-minute (main product for Figures 1, 3, 4, 5, S5, S6; configuration available in `./processing/`)
+  - 15-minute (used for consistent observation and model tracking to identify cells over AMF site in disdrometer analysis; Figs. 9-11 and S8-S9)
 - **Description:** Tracked convective cells
 - **Expected Directory:** `/global/homes/m/mckenna/cacti_data/cell_tracks/`
 - **Note:** Higher temporal resolution tracking available from authors (mckenna.stanford@pnnl.gov)
