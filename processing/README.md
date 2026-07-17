@@ -32,6 +32,25 @@ These scripts should be run in the following order to recreate the analysis work
 - **`track_cells_disdrometer_collocation.ipynb`** - Match cells with disdrometer locations
 - **`merge_in_situ_probes.ipynb`** - Consolidate multiple probe datasets
 
+### Step 6: Cell Tracking with PyFLEXTRKR
+
+**PyFLEXTRKR** (Python FLEXible object TRacKeR) is a flexible atmospheric feature tracking software package used to track convective clouds. For this project, we apply it to identify and track individual convective cells from WRF model output at high temporal resolution (3.75-minute output).
+
+**Cell Tracking Scripts:**
+- **`run_celltracking_cacti_wrf3km_highfreq.sh`** - Bash script to run PyFLEXTRKR cell tracking on high-frequency WRF 3-km simulations
+- **`config_wrf_3km_highfreq.yaml`** - Configuration file specifying tracking parameters for WRF reflectivity data
+
+**Key Features:**
+- Tracks individual convective cells using radar reflectivity threshold detection
+- Provides cell-scale statistics (size, intensity, lifetime, trajectory)
+- Generates cell tracking netCDF output and visualization quicklooks
+- Supports parallel processing via Dask
+
+**Reference:**
+For detailed information about PyFLEXTRKR methodology and capabilities, see:
+- Feng et al. (2023): PyFLEXTRKR: a flexible feature tracking Python software for convective cloud analysis. *Geosci. Model Dev.*, 16(10), 2753-2776. https://doi.org/10.5194/gmd-16-2753-2023
+- GitHub repository: https://github.com/FlexTRKR/PyFLEXTRKR
+
 ## Helper Functions
 
 **`functions.py`** - Contains utility functions frequently used across processing scripts:

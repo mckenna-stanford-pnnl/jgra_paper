@@ -1,0 +1,41 @@
+name: cacti-analysis
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  # Core scientific computing
+  - python=3.9
+  - numpy
+  - scipy
+  - pandas
+  - xarray
+  - netCDF4
+  
+  # Visualization
+  - matplotlib
+  - cartopy
+  
+  # Parallel computing
+  - dask
+  - distributed
+  
+  # Machine learning / statistics
+  - scikit-learn
+  
+  # Cell tracking
+  - pyflextrkr
+  
+  # Specialized packages
+  - miepython
+  
+  # Utilities
+  - pyyaml
+  - tqdm
+  - jupyterlab
+  
+  # Development/analysis
+  - ipython
+  - pip
+  
+  - pip:
+    # Any pip-only packages can be specified here if needed

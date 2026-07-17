@@ -1,4 +1,4 @@
-# CACTI/LASSO WRF Cloud-Resolving Model Analysis
+# CACTI WRF Cloud-Resolving Model Analysis
 ## Code for Microphysical Property Evaluation and Comparison with Observations
 
 This repository contains analysis code for comparing WRF-simulated cloud microphysical properties with observations from the CACTI campaign. The code processes cloud-resolving WRF simulations and observational data from radar (CSAPR/Taranis), cell tracking for both observations and simulations, aircraft probes, satellite retrievals, and surface measurements at the ARM AMF site. Simulations include a 3-km seasonal simulation and case studies from the Large Eddy Simulation ARM Symbiotic Simulation and Observation (LASSO) CACTI project. 
@@ -10,6 +10,7 @@ This repository contains analysis code for comparing WRF-simulated cloud microph
 - [Directory Structure](#directory-structure)
 - [Data Sources](#data-sources)
 - [Workflow](#workflow)
+- [Reproduction & Environment Setup](#reproduction--environment-setup)
 - [Running the Analysis](#running-the-analysis)
 - [Generated Data Files](#generated-data-files)
 - [Open Research Statement](#open-research-statement)
@@ -262,6 +263,70 @@ EXTERNAL DATA
 ---
 
 
+## Reproduction & Environment Setup
+
+### Prerequisites
+
+This analysis requires Python 3.9+ and conda (or mamba) to manage dependencies. We provide an `environment.yml` file that specifies all required packages, including:
+
+- **Core Scientific Libraries:** NumPy, SciPy, Pandas, Xarray, NetCDF4
+- **Visualization:** Matplotlib, Cartopy
+- **Parallel Computing:** Dask, Distributed
+- **Cell Tracking:** PyFLEXTRKR
+- **Additional Tools:** Scikit-learn, miepython, and Jupyter
+
+### Creating the Analysis Environment
+
+1. **Clone the repository** (if not already done):
+```bash
+git clone https://github.com/mckenna-stanford-pnnl/jgra_paper.git
+cd jgra_paper
+```
+
+2. **Create the Conda environment** using the provided `environment.yml`:
+```bash
+# Using conda
+conda env create -f environment.yml
+
+# Or using mamba (faster):
+mamba env create -f environment.yml
+```
+
+3. **Activate the environment:**
+```bash
+conda activate cacti-analysis
+```
+
+4. **Verify installation:**
+```bash
+python -c "import xarray, dask, pyflextrkr; print('All dependencies installed successfully!')"
+```
+
+### Environment Details
+
+- **Name:** `cacti-analysis`
+- **Python Version:** 3.9
+- **Key Packages:**
+  - `pyflextrkr` - Cell tracking and feature identification (Feng et al., 2023)
+  - `xarray`, `netCDF4` - NetCDF file I/O
+  - `cartopy` - Geographic data visualization
+  - `dask`, `distributed` - Parallel processing for large datasets
+  - `miepython` - Mie scattering calculations
+  - `scikit-learn` - Statistical analysis
+
+### PyFLEXTRKR Setup
+
+PyFLEXTRKR is a flexible atmospheric feature tracking software used in this project for cell tracking. For detailed information:
+
+- **Paper:** Feng et al. (2023). PyFLEXTRKR: a flexible feature tracking Python software for convective cloud analysis. *Geosci. Model Dev.*, 16(10), 2753-2776. https://doi.org/10.5194/gmd-16-2753-2023
+- **GitHub Repository:** https://github.com/FlexTRKR/PyFLEXTRKR
+- **Installation via Conda:** `pyflextrkr` is automatically installed as part of the environment
+
+For high-frequency cell tracking (3.75-minute temporal resolution WRF output), see [processing/README.md](processing/README.md#step-6-cell-tracking-with-pyflextrkr) for configuration details and example scripts.
+
+---
+
+
 ## Running the Analysis
 
 ### To Regenerate All Intermediate Data (Processing Phase)
@@ -425,12 +490,6 @@ If you use this code, please cite:
 For issues with external data sources:
 - **ARM Archive:** [https://adc.arm.gov/](https://adc.arm.gov/)
 - **LASSO Documentation:** [https://adc.arm.gov/lasso](https://adc.arm.gov/lasso)
-
----
-
-## License
-
-This code repository is provided as-is for scientific research purposes. Please see the LICENSE file for specific terms.
 
 ---
 
