@@ -23,6 +23,20 @@ This directory contains Jupyter notebooks that generate publication-quality figu
 | `plot_fig_S2_ctt_CDFs.ipynb` | S2 | Cloud top temperature CDFs |
 | `plot_fig_S10_wrf_vs_obs_dsd_properties_LASSO_500m_native.ipynb` | S10 | DSD properties at LASSO 500m resolution |
 
+## Helper Functions
+
+**`functions.py`** - Contains utility functions for plotting, data manipulation, and statistical analysis:
+- Color map utilities and custom colormaps
+- Figure layout and formatting helpers
+- Data transformation and filtering functions
+- Statistical analysis convenience functions
+- Domain-specific convenience functions for CACTI/LASSO analysis
+
+Import and use in your notebooks:
+```python
+from functions import *  # Import all helpers
+```
+
 ## Required Data Files
 
 All analysis scripts require the following files from `generated_data/` directory:

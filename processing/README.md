@@ -32,6 +32,19 @@ These scripts should be run in the following order to recreate the analysis work
 - **`track_cells_disdrometer_collocation.ipynb`** - Match cells with disdrometer locations
 - **`merge_in_situ_probes.ipynb`** - Consolidate multiple probe datasets
 
+## Helper Functions
+
+**`functions.py`** - Contains utility functions frequently used across processing scripts:
+- File I/O helpers for netCDF and pickle formats
+- Common data transformations and calculations
+- Domain utilities (grid definitions, file path helpers)
+- Dask/parallel processing convenience functions
+- Validation and error-checking utilities
+
+Import and use in your notebooks:
+```python
+from functions import *  # Import all helpers
+```
 
 ## Key Inputs Required
 
