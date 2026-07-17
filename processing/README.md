@@ -41,17 +41,37 @@ These scripts should be run in the following order to recreate the analysis work
 - Disdrometer measurements
 - Updated file paths in each notebook to match your system
 
-## Key Outputs Generated
+## Intermediate Files Generated
 
-These scripts generate large intermediate pickle files:
+Each processing script generates intermediate files (stored on HPC scratch space, **NOT in repository**):
 
-- `wrf_dsd_props_cu_only.p` (1.1 GB)
-- `LASSO_d2/3/4_dsd_props_cu_only.p` (125-139 MB each)
-- `LASSO_500m_native_dsd_props_cu_only.p` (2.2 GB)
-- `wrf_3km_cell_track_reflectivity_disdrometer.p` (118 KB)
-- `static_vars.npz` (11 MB)
+### WRF Derived Property Files
+- **`calc_wrf_properties.ipynb`** → `/pscratch/sd/m/mckenna/cacti/wrf/derived_3km/WRF_CACTI_3km_derived_YYYYMMDD.nc` (multiple files, one per date; ~50-500 MB each)
+- **`calc_wrf_properties_lasso.ipynb`** → `/pscratch/sd/m/mckenna/wrf_lasso/coarse_grained/{date}/{ens}/{domain}/derived/LASSO_CACTI_2.5km_derived_*.nc`
+- **`calc_wrf_properties_lasso_500m.ipynb`** → Similar but at native 500m resolution
 
-These files are saved to `generated_data/` directory and consumed by analysis scripts.
+### WRF DSD Parameters  
+- **`calc_wrf_gamma_properties.ipynb`** → `/pscratch/sd/m/mckenna/cacti/wrf/derived_3km_dsd_parameters/WRF_CACTI_3km_DSD_parameters_liq_only_YYYYMMDD.nc` (multiple files; ~100-800 MB each)
+- **`calc_wrf_gamma_properties_LASSO.ipynb`** → `/pscratch/sd/m/mckenna/wrf_lasso/coarse_grained/{date}/{ens}/{domain}/derived/LASSO_CACTI_2.5km_DSD_parameters_liq_only_*.nc`
+- **`calc_wrf_gamma_properties_LASSO_500m_native.ipynb`** → `/pscratch/sd/m/mckenna/wrf_lasso/500m_wrf_output/{date}/{ens}/derived/LASSO_CACTI_500m_DSD_parameters_liq_only_*.nc`
+
+### Filtered Congestus Parameters  
+- **`filter_wrf_dsd_properties_congestus*.ipynb`** (3 variants) → `/pscratch/sd/m/mckenna/cacti/wrf/temp_cong_dsd_params/cong_dsd_params_YYYYMMDD*.npz` and `LASSO_*_cong_dsd_params_*.npz` files
+
+### Coarse-Grained Radar Data
+- **`coarse_grain_regrid_csapr.ipynb`** and **`lasso` variant** → Regridded CSAPR `.nc` files
+
+### Consolidated Observational Data
+- **`consolidate_coarse_grained_csapr_goes.ipynb`** → `/pscratch/sd/m/mckenna/cacti/matched_csapr_goes/CSAPR_GOES_matched_times_3km_YYYYMMDD.nc`
+- **`consolidate_coarse_grained_csapr_goes_2.5km.ipynb`** → `/pscratch/sd/m/mckenna/cacti/matched_csapr_goes/2.5km/CSAPR_GOES_matched_times_2.5km_YYYYMMDD.nc`
+
+### Final Processed Data (saved to `generated_data/`)
+- **`track_cells_disdrometer_collocation.ipynb`** → `generated_data/wrf_3km_cell_track_reflectivity_disdrometer.p` (118 KB)
+- **`calc_wrf_gamma_properties*.ipynb`** (combined output) → `generated_data/wrf_dsd_props_cu_only.p` (1.1 GB) and LASSO variants
+- **`calc_wrf_properties.ipynb`** → `generated_data/static_vars.npz` (11 MB)
+- **`merge_in_situ_probes.ipynb`** → `/global/homes/m/mckenna/projdir/cacti/aircraft_in_situ/post/flight_dictionaries_raw_data.p`
+
+These intermediate `.nc` and `.npz` files are essential for the processing chain but require ~50-100 GB of temporary scratch space.
 
 ## Parallel Processing
 
