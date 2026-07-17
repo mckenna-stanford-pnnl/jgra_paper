@@ -1,0 +1,60 @@
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Generated intermediate data files (large binary files)
+generated_data/*.p
+generated_data/*.pkl
+generated_data/*.npz
+generated_data/*.pickle
+
+# Output figures and plots
+figures/
+*.png
+*.pdf
+*.jpg
+*.jpeg
+
+# Python cache and compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+*.tmp
+
+# Temporary files
+*.log
+*.out
+*.err
+
+# Local data directories (if creating locally)
+data/
+scratch/
+
+# Dask worker directories
+dask-worker-space/
+
+# Environment files (optional - uncomment if needed)
+# venv/
+# env/
+# .conda/
+
+# Virtual environment directories
+conda_env/
+venv/
+
+# Misc
+.env
+.credentials
+secrets.json
